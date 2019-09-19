@@ -1,0 +1,10 @@
+% GCD code.
+
+gcd(X, 0, X).
+
+gcd(X, Y, W) :- X >= Y, Y > 0,
+		Z is mod(X,Y),
+		gcd(Y, Z, W).
+
+gcd(X, Y, W) :- X < Y,
+		gcd(Y, X, W).
