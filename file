@@ -1,0 +1,23 @@
+
+
+testing: C:\project\CSCI_320\tests\adder.py
+test 1 of 3: 1
+passing value as input: 1
+(b'input val\x00\r\n', None)
+test 2 of 3: 2
+passing value as input: 2
+(b'input val\x00\x00\r\n', None)
+test 3 of 3: 3
+passing value as input: 3
+(b'input val\x00\x00\x00\r\n', None)
+
+testing: C:\project\CSCI_320\tests\adder2.py
+test 1 of 3: 1
+passing value as input: 1
+(b'put value here\x00\r\n', None)
+test 2 of 3: 2
+passing value as input: 2
+(b'put value here\x00\x00\r\n', None)
+test 3 of 3: 3
+passing value as input: 3
+(b'put value here\x00\x00\x00\r\n', None)
