@@ -4,11 +4,11 @@
 % 9/26/2019
 
 
-% run by typing swipl prolog.pro
-% commands are run by typing myLength([1,2,3],X)
+% run by typing (e.g.) swipl Assign2-AJF.pl
+% commands are run by typing (e.g.) myLength([1,2,3],X).
 
 
-% submethods (written by me)
+% submethods
 % quick and ugly shared methods to implement core functionality
     % myTop(List, Head)
         % myTop is for multi-dereferencing head within a method
@@ -74,8 +74,7 @@
         myTop(Tail, NextHead),
         NextHead < Head,
         myTail(Tail, NextTail),
-        myMax([Head|NextTail],
-        MaxVal).
+        myMax([Head|NextTail], MaxVal).
 
 
 % 4. myRemove(X, List, Redlist)
