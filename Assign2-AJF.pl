@@ -60,5 +60,17 @@
     % base case
     myPerm([], []).
 
-    % remove
+    % check and recurse
     myPerm(List1, List2) :- myLength(List1, Len1), myLength(List2, Len2), Len1 = Len2, myTop(List1, Head1), myRemove(Head1, List1, Rem1), myRemove(Head1, List2, Rem2), myPerm(Rem1, Rem2).
+
+% 6. intersect(List1, List2, IntList).
+    % obtain a list of common elements between lists 1 and 2.
+
+    % base case
+    intersect([], _, []).
+
+    % recurse w/ match
+    intersect([Head|Tail], List2, IntList) :- myLength(List2, Len2), myRemove(Head, List2, Rem2), myLength(Rem2, Rlen2), Len2 > Rlen2, IntList = [Head|IntersectTail], intersect(Tail, Rem2, IntersectTail).
+
+    % recurse w/ no match
+    intersect([Head|Tail], List2, IntList) :- myLength(List2, Len2), myRemove(Head, List2, Rem2), myLength(Rem2, Rlen2), Len2 = Rlen2, intersect(Tail, Rem2, IntList).
