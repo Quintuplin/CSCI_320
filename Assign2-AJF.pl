@@ -12,19 +12,25 @@
     % myTop is for multi-dereferencing head within a single main loop.
     myTop([Head|_], Head).
 
-    % myRest is for multi-dereferencing tail within a single main loop.
-    myRest([_|Tail], Tail).
+    % myTail is for multi-dereferencing tail within a single main loop.
+    myTail([_|Tail], Tail).
+
+    % merge lists (for exercise 7).
+    merge([],X,X).
+    merge([Head|Tail], List2, MergeList) :-
+        Sublist = [Head|List2],
+        merge(Tail, Sublist, MergeList).
 
 
 % 1. myLength(List, Len).
-    % find length of list (done in class).
+    % find length of list.
 
     myLength([], 0).
     myLength([_|Tail], Len) :- myLength(Tail, X), Len is +(1, X).
 
 
 % 2. myLast(List, L).
-    % find last entry in list (done in class).
+    % find last entry in list.
 
     myLast([L], L).
     myLast([_|Tail], L) :- myLast(Tail, L).
@@ -37,13 +43,13 @@
     % the last item left in the list is the largest.
     myMax([MaxVal], MaxVal).
 
-    % condition for ascending segment.
+    % condition for ascending segment (next head larger than current).
     % removes head and repeats.
     myMax([Head|Tail], MaxVal) :- myTop(Tail, X), X >= Head, myMax(Tail, MaxVal).
 
-    % condition for descending segment.
+    % condition for descending segment (next head smaller than current).
     % removes next head, puts current head back in, then repeats.
-    myMax([Head|Tail], MaxVal) :- myTop(Tail, X), X < Head, myRest(Tail, Y), myMax([Head|Y], MaxVal).
+    myMax([Head|Tail], MaxVal) :- myTop(Tail, X), X < Head, myTail(Tail, Y), myMax([Head|Y], MaxVal).
 
 
 % 4. myRemove(X, List, Redlist).
@@ -79,17 +85,6 @@
 % 7. union(List1, List2, UnionList).
     % obtain the union of two lists (containing elements from both but no duplicates).
 
-    % merge lists.
-    merge([],X,X).
-    merge([Head|Tail], List2, MergeList) :-
-        Sublist = [Head|List2],
-        % write('mergelist: '),
-        % write(Sublist),
-        merge(Tail, Sublist, MergeList).
-
-    % main case.
     union(List1, List2, UnionList) :-
         merge(List1, List2, Combolist),
-        % write('combolist: '),
-        % write(Combolist),
         intersect(Combolist, Combolist, UnionList).
