@@ -21,7 +21,7 @@
 
 
     % merge(List1, List2, MergeList)
-        % merge lists with duplicates intact, but order altered
+        % merge lists with duplicates intact in no particular order
         % quick and ugly merge
 
         % base case
@@ -110,7 +110,7 @@
         myPerm(Rem1, Rem2).
 
 % 6. intersect(List1, List2, IntList)
-    % obtain the intersect of two lists
+    % obtain the intersect of two lists in no particular order
     % intersect = list of all elements in both, no duplicates
 
     % base case
@@ -134,7 +134,7 @@
         intersect(Tail, Rem2, IntList).
 
 % 7. union(List1, List2, UnionList)
-    % obtain the union of two lists
+    % obtain the union of two lists in no particular order
     % union = list of all elements in either, no duplicates
 
     % single case
