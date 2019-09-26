@@ -80,11 +80,16 @@
     % obtain the union of two lists (containing elements from both but no duplicates).
 
     % merge lists.
-    merge(List1, [Head|Tail], MergeList) :-
-        Sublist = [Head|List1],
-        merge(Sublist, Tail, MergeList).
+    merge([],X,X).
+    merge([Head|Tail], List2, MergeList) :-
+        Sublist = [Head|List2],
+        % write('mergelist: '),
+        % write(Sublist),
+        merge(Tail, Sublist, MergeList).
 
     % main case.
     union(List1, List2, UnionList) :-
         merge(List1, List2, Combolist),
+        % write('combolist: '),
+        % write(Combolist),
         intersect(Combolist, Combolist, UnionList).
