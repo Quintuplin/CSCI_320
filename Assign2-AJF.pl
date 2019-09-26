@@ -3,28 +3,35 @@
 % Jack Fraser.
 % 9/26/2019.
 
+
+% myLength(List, Len).
 % find length of list (done).
 myLength([], 0).
 myLength([_|Rest], Len) :- myLength(Rest, X), Len is +(1, X).
 
+
+% myLast(List, L).
 % find last entry in list (done).
 myLast([L], L).
 myLast([_|Rest], L) :- myLast(Rest, L).
 
+
+% myMax(List, MaxVal).
 % find max val in list (incomplete; works for ascending values, but not for descending).
 % utilizes append predicate which is not the subject of any of the questions in this assignment; as such by the wording of the questions it should be valid.
 
+% base condition and submethods.
 myMax([MaxVal], MaxVal).
-myTop([], -1).
+myTop([], 0).
 myTop([Head|_], Head).
-myRest([], -1).
-myRest([Head], -1).
+myRest([Head], []).
 myRest([_|Rest], Rest).
-myMax([Head|Rest], MaxVal) :- myTop(Rest, X), X >= Head, myMax(Rest, MaxVal).
-myMax([Head|Rest], MaxVal) :- myTop(Rest, X), X < Head, myRest(Rest, Y), myMax([Head, Y], MaxVal).
 
-%MaxVal >= Head, myMax(Rest, MaxVal), MaxVal is X.
-%myMax([Head|Rest], MaxVal) :- MaxVal < Head, myMax(Rest, Head), MaxVal is X.
+% condition for ascending segment.
+myMax([Head|Rest], MaxVal) :- myTop(Rest, X), X >= Head, myMax(Rest, MaxVal).
+
+% condition for descending segment.
+myMax([Head|Rest], MaxVal) :- myTop(Rest, X), X < Head, myRest(Rest, Y), append([Head], Y, HeadY), myMax(HeadY, MaxVal).
 
 % remove val from list.
 myRemove()
