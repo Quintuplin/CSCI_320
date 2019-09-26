@@ -9,9 +9,10 @@
 
 
 % submethods.
-    % myTop is for double-dereferencing head within a single main loop.
+    % myTop is for multi-dereferencing head within a single main loop.
     myTop([Head|_], Head).
-    % myRest is for double-dereferencing tail within a single main loop.
+
+    % myRest is for multi-dereferencing tail within a single main loop.
     myRest([_|Tail], Tail).
 
 
@@ -66,11 +67,22 @@
 % 6. intersect(List1, List2, IntList).
     % obtain a list of common elements between lists 1 and 2.
 
-    % base case
+    % base case.
     intersect([], _, []).
 
-    % recurse w/ match
+    % recurse w/ match.
     intersect([Head|Tail], List2, IntList) :- myLength(List2, Len2), myRemove(Head, List2, Rem2), myLength(Rem2, Rlen2), Len2 > Rlen2, IntList = [Head|IntersectTail], intersect(Tail, Rem2, IntersectTail).
 
-    % recurse w/ no match
+    % recurse w/ no match.
     intersect([Head|Tail], List2, IntList) :- myLength(List2, Len2), myRemove(Head, List2, Rem2), myLength(Rem2, Rlen2), Len2 = Rlen2, intersect(Tail, Rem2, IntList).
+
+% 7. union(List1, List2, UnionList).
+    % obtain the union of two lists (containing elements from both but no duplicates).
+
+    % base case.
+    union([], [], []).
+
+    % main case.
+    union(List1, List2, UnionList) :-
+        Combolist = [List1 | [List2]],
+        intersect(Combolist, Combolist, [UnionList]).
