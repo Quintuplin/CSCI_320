@@ -8,15 +8,22 @@
 % commands are run by typing myLength([1,2,3],X).
 
 
+% submethods.
+    % myTop is for double-dereferencing head within a single main loop.
+    myTop([Head|_], Head).
+    % myRest is for double-dereferencing tail within a single main loop.
+    myRest([_|Tail], Tail).
+
+
 % 1. myLength(List, Len).
-    % find length of list (done).
+    % find length of list (done in class).
 
     myLength([], 0).
     myLength([_|Tail], Len) :- myLength(Tail, X), Len is +(1, X).
 
 
 % 2. myLast(List, L).
-    % find last entry in list (done).
+    % find last entry in list (done in class).
 
     myLast([L], L).
     myLast([_|Tail], L) :- myLast(Tail, L).
@@ -24,14 +31,6 @@
 
 % 3. myMax(List, MaxVal).
     % find max val in list.
-
-    % submethods.
-    % myTop is for double-dereferencing head within a single main loop.
-    myTop([], 0).
-    myTop([Head|_], Head).
-    % myRest is for double-dereferencing tail within a single main loop.
-    myRest([_], []).
-    myRest([_|Tail], Tail).
 
     % base condition.
     % the last item left in the list is the largest.
@@ -54,3 +53,12 @@
 
     myRemove(X, [Head|Tail], Redlist) :- X \= Head, Redlist = [Head|Redtail], myRemove(X, Tail, Redtail).
     myRemove(X, [Head|Tail], Redlist) :- X = Head, myRemove(X, Tail, Redlist).
+
+% 5. myPerm(List1, List2).
+    % evaluate if list2 is a permuation of list1.
+
+    % base case
+    myPerm([], []).
+
+    % remove
+    myPerm(List1, List2) :- myLength(List1, Len1), myLength(List2, Len2), Len1 = Len2, myTop(List1, Head1), myRemove(Head1, List1, Rem1), myRemove(Head1, List2, Rem2), myPerm(Rem1, Rem2).
