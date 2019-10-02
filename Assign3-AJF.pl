@@ -66,12 +66,17 @@
     mergesort(List, MSorted) :- len(List, Lenlist), R is Lenlist/2, mergesort(List, 1, R).
     mergesort(List, L, R) :- M is (L+R)/2, mergesort(List, L, M, Sort1), mergesort(List, M+1, R, Sort2).
 
+    merge([], [], []).
     merge([X], [], [X]).
     merge([], [Y], [Y]).
-    merge([X], [Y], List) := X > Y, List is [X, Y].
-    merge([X], [Y], List) := X <= Y, List is [Y, X].
-    merge([Xhead|Xtail], [Yhead|Ytail], List) := 
-        merge([Xhead], [Yhead], S1),
+
+    merge([X|Xtail], [Y|Ytail], [X|Ltail]) := 
+        X > Y,
+        merge([Xtail], [Y|Ytail], Ltail).
+
+    merge([X|Xtail], [Y|Ytail], [Y|Ltail]) := 
+        X <= Y,
+        merge([X|Xtail], [Ytail], Ltail).
         
 
 % 4a. tree(Tree)
