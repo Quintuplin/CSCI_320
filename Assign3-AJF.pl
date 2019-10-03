@@ -60,24 +60,43 @@
 % 3. mergesort(List, MSorted)
     % integer list merge sort algorithm
     % accepts unsorted List, returns sorted MSorted
-    % may utilize functors from previous assignment
-
+    % may utilize functors from previous assignments
     mergesort([X], [X]).
-    mergesort(List, MSorted) :- len(List, Lenlist), R is Lenlist/2, mergesort(List, 1, R).
-    mergesort(List, L, R) :- M is (L+R)/2, mergesort(List, L, M, Sort1), mergesort(List, M+1, R, Sort2).
+    mergesort(List, MSorted) :- 
+        len(List, Lenlist), 
+        R is Lenlist/2,
+        sublist(List, R, LeftList, RightList),
+        mergesort(LeftList, LeftSorted),
+        mergesort(RightList, RightSorted),
+        merge2(LeftList, RightList, MSorted).
 
-    merge([], [], []).
-    merge([X], [], [X]).
-    merge([], [Y], [Y]).
+    % supporting functions
+    % sublist(List, R, Sublist, Rest)
+        % accepts a list and an index
+        % splits the list by the index in no particular order
+        sublist([], _, [], []).
+        sublist(X, 0, [], X).
 
-    merge([X|Xtail], [Y|Ytail], [X|Ltail]) := 
-        X > Y,
-        merge([Xtail], [Y|Ytail], Ltail).
+        sublist([Head|Rest], R, Sublist, Rest) :- 
+            M is R-1,
+            Sublist is [Head|Subrest],
+            sublist(Rest, R-1, Subrest, Rest).
 
-    merge([X|Xtail], [Y|Ytail], [Y|Ltail]) := 
-        X <= Y,
-        merge([X|Xtail], [Ytail], Ltail).
-        
+    % merge2(List1, List2, MergedSorted)
+        % accepts two sorted lists of any length
+        % appends elements to the merged list one at a time recursively
+        merge2([], [], []).
+        merge2([X], [], [X]).
+        merge2([], [Y], [Y]).
+
+        merge2([X|Xtail], [Y|Ytail], [X|Ltail]) := 
+            X > Y,
+            merge2([Xtail], [Y|Ytail], Ltail).
+
+        merge2([X|Xtail], [Y|Ytail], [Y|Ltail]) := 
+            X <= Y,
+            merge2([X|Xtail], [Ytail], Ltail).
+
 
 % 4a. tree(Tree)
     % given a binary tree represented in sublists of sublists, return True or False
