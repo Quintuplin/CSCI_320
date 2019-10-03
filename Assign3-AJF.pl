@@ -33,16 +33,19 @@
     fib(N, FN) :-
         X is N-1, fib(X, V1),
         Y is N-2, fib(Y, V2),
-        S = V1 + V2, FN = S.
+        S is V1 + V2, FN = S.
 
 % 2. ack(X, Y, A)
     % ackermann function
     % given integers X, Y, return the ackermann value A
 
     % formula cases
-    ack(0, Y, Y+1).
-    ack(X, 0, A) :- ack(X-1, 1, A).
-    ack(X, Y, A) :- ack(X, Y-1, SS), ack(X-1, SS, A).
+    ack(0, Y, Val) :- Val is Y+1.
+    ack(X, 0, A) :- Val is X-1, ack(Val, 1, A).
+    ack(X, Y, A) :-
+        Yval is Y-1, Xval is X-1,
+        ack(X, Yval, SS),
+        ack(Xval, SS, A).
 
 % 3. mergesort(List, MSorted)
     % integer list merge sort algorithm
