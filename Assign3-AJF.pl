@@ -8,31 +8,6 @@
 % commands are run by typing (e.g.) myLength([1,2,3],X).
 
 
-% submethods
-% quick and ugly shared methods to implement core functionality
-    % myTop(List, Head)
-        % myTop is for multi-dereferencing head within a method
-        myTop([Head|_], Head).
-
-
-    % myTail(List, Tail)
-        % myTail is for multi-dereferencing tail within a method
-        myTail([_|Tail], Tail).
-
-
-    % merge(List1, List2, MergeList)
-        % merge lists with duplicates intact in no particular order
-        % quick and ugly merge
-
-        % base case
-        merge([],X,X).
-
-        % remove head from list1, appends to list2, recurse
-        merge([Head|Tail], List2, MergeList) :-
-            Sublist = [Head|List2],
-            merge(Tail, Sublist, MergeList).
-
-
 % 1. fib(N, FN)
     % fibonacci sequence
     % N is the index of the fibonacci number along the sequence (starting at 1)
@@ -96,7 +71,6 @@
         merge2([X|Xtail], [Y|Ytail], [Y|Ltail]) := 
             X <= Y,
             merge2([X|Xtail], [Ytail], Ltail).
-
 
 % 4a. tree(Tree)
     % given a binary tree represented in sublists of sublists, return True or False
