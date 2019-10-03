@@ -76,11 +76,13 @@
         merge2([X], [], [X]).
         merge2([], [Y], [Y]).
 
-        merge2([X|Xtail], [Y|Ytail], [X|Ltail]) :=
+        merge2([X|Xtail], [Y|Ytail], Rel) :=
+            Rel = [X|Ltail],
             X > Y,
             merge2(Xtail, [Y|Ytail], Ltail).
 
-        merge2([X|Xtail], [Y|Ytail], [Y|Ltail]) :=
+        merge2([X|Xtail], [Y|Ytail], Rel) :=
+            Rel = [Y|Ltail],
             X <= Y,
             merge2([X|Xtail], Ytail, Ltail).
 
@@ -89,9 +91,12 @@
     % tree is in the form [root leftbranch rightbranch]
     % example; [a [b [] [c [] []]] [d [] [e [f [] []] []]]]
 
-    tree([]).
-    tree(_).
-    tree[Head|Taila, Tailb] :- tree[Taila], tree[Tailb].
+    single(_).
+    single([]).
+    tree(X) :- single(X).
+    tree([Head, Taila, Tailb]) :-
+        single(Head),
+        tree(Taila), tree(Tailb).
 
 % 4b. preorder(Tree, PreorderList)
     % given a binary tree Tree, return a preorder traversal of the tree
@@ -100,6 +105,7 @@
     % base case
     preorder([], []).
     preorder(X, [X]).
-    preorder([Head|Taila, Tailb], [Head|Resta, Restb]) :=
-        preorder([Tailb], Resta),
-        preorder([Taila], Restb).
+    preorder([Head, Taila, Tailb], List) :=
+        List = [Head| Resta, Restb],
+        preorder(Tailb, Resta),
+        preorder(Taila, Restb).
