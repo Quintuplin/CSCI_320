@@ -7,6 +7,18 @@
 % run by typing (e.g.) swipl Assign3-AJF.pl
 % commands are run by typing (e.g.) myLength([1,2,3],X).
 
+% imports from prev homworks
+    % myLength(List, Len)
+    % find length of list
+
+    % base case
+    myLength([], 0).
+
+    % increment count, reduce, and recurse
+    myLength([_|Tail], Len) :-
+        myLength(Tail, X),
+        Len is +(1, X).
+
 
 % 1. fib(N, FN)
     % fibonacci sequence
@@ -18,8 +30,8 @@
     fib(2, 1).
 
     % recursive case
-    fib(N, FN) :- 
-        X is N-1, fib(X, V1), 
+    fib(N, FN) :-
+        X is N-1, fib(X, V1),
         Y is N-2, fib(Y, V2),
         S = V1 + V2, FN = S.
 
@@ -37,13 +49,13 @@
     % accepts unsorted List, returns sorted MSorted
     % may utilize functors from previous assignments
     mergesort([X], [X]).
-    mergesort(List, MSorted) :- 
-        len(List, Lenlist), 
+    mergesort(List, MSorted) :-
+        myLength(List, Lenlist),
         R is Lenlist/2,
         sublist(List, R, LeftList, RightList),
         mergesort(LeftList, LeftSorted),
         mergesort(RightList, RightSorted),
-        merge2(LeftList, RightList, MSorted).
+        merge2(LeftSorted, RightSorted, MSorted).
 
     % supporting functions
     % sublist(List, R, Sublist, Rest)
@@ -52,10 +64,10 @@
         sublist([], _, [], []).
         sublist(X, 0, [], X).
 
-        sublist([Head|Rest], R, Sublist, Rest) :- 
+        sublist([Head|Rest], R, Sublist, Rest) :-
             M is R-1,
             Sublist is [Head|Subrest],
-            sublist(Rest, R-1, Subrest, Rest).
+            sublist(Rest, M, Subrest, Rest).
 
     % merge2(List1, List2, MergedSorted)
         % accepts two sorted lists of any length
@@ -64,13 +76,13 @@
         merge2([X], [], [X]).
         merge2([], [Y], [Y]).
 
-        merge2([X|Xtail], [Y|Ytail], [X|Ltail]) := 
+        merge2([X|Xtail], [Y|Ytail], [X|Ltail]) :=
             X > Y,
-            merge2([Xtail], [Y|Ytail], Ltail).
+            merge2(Xtail, [Y|Ytail], Ltail).
 
-        merge2([X|Xtail], [Y|Ytail], [Y|Ltail]) := 
+        merge2([X|Xtail], [Y|Ytail], [Y|Ltail]) :=
             X <= Y,
-            merge2([X|Xtail], [Ytail], Ltail).
+            merge2([X|Xtail], Ytail, Ltail).
 
 % 4a. tree(Tree)
     % given a binary tree represented in sublists of sublists, return True or False
@@ -87,7 +99,7 @@
 
     % base case
     preorder([], []).
-    preorder(X, [X|Rest]).
-    preorder([Head|Taila, Tailb], [Head|Rest]) := 
-        preorder([Tailb], Rest),
-        preorder([Taila], Rest).
+    preorder(X, [X]).
+    preorder([Head|Taila, Tailb], [Head|Resta, Restb]) :=
+        preorder([Tailb], Resta),
+        preorder([Taila], Restb).
