@@ -95,8 +95,8 @@
     % example; [a [b [] [c [] []]] [d [] [e [f [] []] []]]]
 
     single(_).
-    single([]).
     tree(X) :- single(X).
+    tree([]).
     tree([Head, Taila, Tailb]) :-
         single(Head),
         tree(Taila), tree(Tailb).
