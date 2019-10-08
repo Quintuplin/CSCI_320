@@ -13,4 +13,14 @@
 
 'pear
 
+(cons 1 2)
+
+(cons '(1 2) 2)
+
 (list 1 2 'a 4 'c)
+
+(list? (list 1 2 'a 4 'c))
+
+(list? 1)
+
+(list? '(1 2 'a 4 'c))
