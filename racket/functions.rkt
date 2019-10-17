@@ -49,13 +49,14 @@
 ;apply_to_all - applies a single-value function to every value within a list, returns list
 (define (apply_to_all func lst)(cond
     ((null? lst) lst)
-    (else (cons (func (car lst) (apply_to_all func (cdr lst)))))
+    (else (cons (func (car lst)) (apply_to_all func (cdr lst))))
 ))
 
 '(test apply_to_all)
 (apply_to_all sqr '(1 2 3))
+(apply_to_all sqr '(2 1 4))
 
-;factorial
+;factorial (tail recursive)
 (define (auxfact n result) (cond
     ((= n 0) result)
     (else(auxfact(- n 1) (* n result)))
