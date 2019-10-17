@@ -70,11 +70,10 @@
 (factorial 3)
 (factorial 4)
 
-;make_list_size - takes number n, list e; creates a list containing n copies of e
+;make_list_size - takes number n, expression e; creates a list containing n copies of e
 (define (make_list_size n e)(cond
     ((<= n 0) '())
-    ((null? e) '())
-    (else(append((list e) (make_list_size (- n 1) e))))
+    (else(cons e (make_list_size (- n 1) e)))
 ))
 
 '(test make_list_size)
