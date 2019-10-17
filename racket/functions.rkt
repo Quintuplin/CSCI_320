@@ -11,9 +11,6 @@
 '(test member)
 (member? 1 '(1 2 3))
 (member? 1 '(2 1 3))
-(member? 1 '(2 1))
-(member? 1 '(1))
-(member? 1 '(2))
 (member? 1 '(2 2 3))
 
 ;append - takes two lists, returns list 1 then list 2
@@ -36,7 +33,6 @@
 '(test reverse)
 (reverse '(1 2 3))
 (reverse '(4 5 6))
-(reverse '())
 
 ;sqr
 (define (sqr x) (* x x))
@@ -65,7 +61,6 @@
 (define (factorial n) (auxfact n 1))
 
 '(test factorial)
-(factorial 1)
 (factorial 2)
 (factorial 3)
 (factorial 4)
@@ -78,6 +73,11 @@
 
 '(test make_list_size)
 (make_list_size 2 4)
-(make_list_size 4 2)
-(make_list_size 2 '(2))
-(make_list_size 2 '(a b c))
+(make_list_size 3 '(2))
+(make_list_size 4 '(a b c))
+
+;zeros - takes simple list of numbers, returns count of 0s
+(define (zeros lst)(cond
+    ((null? lst) 0)
+    ((= (car lst) 0) )
+))
