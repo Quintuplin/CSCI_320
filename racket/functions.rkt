@@ -39,6 +39,12 @@
 (reverse '())
 
 ;sqr
+(define (sqr x) (* x x))
+
+'(test sqr)
+(sqr 1)
+(sqr 2)
+(sqr 4)
 
 ;apply_to_all - applies a single-value function to every value within a list, returns list
 (define (apply_to_all func lst)(cond
@@ -48,6 +54,20 @@
 
 '(test apply_to_all)
 (apply_to_all sqr '(1 2 3))
+
+;factorial
+(define (auxfact n result) (cond
+    ((= n 0) result)
+    (else(auxfact(- n 1) (* n result)))
+))
+
+(define (factorial n) (auxfact n 1))
+
+'(test factorial)
+(factorial 1)
+(factorial 2)
+(factorial 3)
+(factorial 4)
 
 ;make_list_size - takes number n, list e; creates a list containing n copies of e
 (define (make_list_size n e)(cond
