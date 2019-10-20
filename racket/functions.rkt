@@ -64,20 +64,3 @@
 (factorial 2)
 (factorial 3)
 (factorial 4)
-
-;make_list_size - takes number n, expression e; creates a list containing n copies of e
-(define (make_list_size n e)(cond
-    ((<= n 0) '())
-    (else(cons e (make_list_size (- n 1) e)))
-))
-
-'(test make_list_size)
-(make_list_size 2 4)
-(make_list_size 3 '(2))
-(make_list_size 4 '(a b c))
-
-;zeros - takes simple list of numbers, returns count of 0s
-(define (zeros lst)(cond
-    ((null? lst) 0)
-    ((= (car lst) 0) )
-))
