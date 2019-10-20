@@ -54,6 +54,12 @@
     (else (cons (car lst) (remove (cdr lst) atom)))
 ))
 
+'(test remove)
+(remove '(1 2 3 4 5) 4)
+(remove '(1 2 3 5) 4)
+(remove '(1 4 4 5) 4)
+(remove '(4 4 4 4) 4)
+
 ;largest - accepts list of numbers, returns largest value; if empty, return empty list
 (define (auxlargest lst max)(cond
     ((null? lst) max)

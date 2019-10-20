@@ -6,6 +6,8 @@
 ;G. Pothering
 ;10/24/2019
 
+;1) complex number operations
+
 ;complex number operations; numbers involving i (sqrt -1); have complex variants on normal operations, defined below
 ;complex numbers will in this case be represented by two-element lists
 ;where the first atom in the list is the real part, and the second is the i part
@@ -66,3 +68,46 @@
         )
     )
 )
+
+;2) permutation detection
+
+;permutation - take list1, list2, return #t/#f if lists are permutations
+(define (permutation list1, list2)(cond
+    ((and (null? list1) (null? list2)) #t)
+    ((not (= (length list1) (length list2))) #f)
+    (else (permutation (remove* list1 (car list1)) (remove* list2 (car list1))))
+))
+
+;3) binary tree operations
+
+;tree is of the form (root, left leaf, right leaf)
+;root is an atom, leaves can be either atoms or subtrees
+;tree? - accepts list as argument, returns #t, #f if valid binary tree
+(define (tree? lst)(cond
+    ((not (list? (lst))) #f)
+    ((null? lst) #t)
+    ((not (= (length lst) 3)) #f)
+    ((list? (car(lst))) #f)
+    (else (and (tree? (cadr(lst))) (tree? (caddr(lst)))))
+))
+
+;preorder - accepts tree, returns list of values based on pre-order traversal
+;root, left, right
+(define (preorder lst)(cond
+    ((null? lst) lst)
+    (cons (car lst) (append (preorder (cadr lst)) (preorder (caddr lst))))  
+))
+
+;inorder - accepts tree, returns list of values based on in-order traversal
+;left, root, right
+(define (inorder lst)(cond
+    ((null? lst) lst)
+    (append (inorder (cadr lst)) (cons (car lst) (inorder (caddr lst))))  
+))
+
+;postorder - accepts tree, returns list of values based on post-order traversal
+;left, right, root
+(define (inorder lst)(cond
+    ((null? lst) lst)
+    (append (inorder (cadr lst)) (inorder (caddr lst)) (list (car lst)))
+))
