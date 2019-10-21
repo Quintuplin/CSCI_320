@@ -72,7 +72,7 @@
 ;2) permutation detection
 
 ;permutation - take list1, list2, return #t/#f if lists are permutations
-(define (permutation list1, list2)(cond
+(define (permutation list1 list2)(cond
     ((and (null? list1) (null? list2)) #t)
     ((not (= (length list1) (length list2))) #f)
     (else (permutation (remove* list1 (car list1)) (remove* list2 (car list1))))
@@ -107,7 +107,7 @@
 
 ;postorder - accepts tree, returns list of values based on post-order traversal
 ;left, right, root
-(define (inorder lst)(cond
+(define (postorder lst)(cond
     ((null? lst) lst)
-    (append (inorder (cadr lst)) (inorder (caddr lst)) (list (car lst)))
+    (append (postorder (cadr lst)) (postorder (caddr lst)) (list (car lst)))
 ))
