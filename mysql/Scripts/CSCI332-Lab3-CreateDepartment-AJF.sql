@@ -2,10 +2,10 @@ USE cofc2ajf;
 
 CREATE TABLE DEPARTMENT
 (
-	DID		CHAR(4),
+	DID		CHAR(4) NOT NULL,
     DeptName	VARCHAR(30) NOT NULL,
     OfficeLocation	VARCHAR(255),
     CharID	CHAR(8),
-    
+
     PRIMARY KEY (DID)
 );
