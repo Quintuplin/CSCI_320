@@ -20,8 +20,8 @@
 ;zeros - takes simple list of numbers, returns count of 0s
 (define (zeros lst)(cond
     ((null? lst) 0)
-    ((= (car lst) 0) (+ (zeros (cat lst)) 1))
-    (else (zeros (cat lst)))
+    ((= (car lst) 0) (+ (zeros (cdr lst)) 1))
+    (else (zeros (cdr lst)))
 ))
 
 '(test zeros)
