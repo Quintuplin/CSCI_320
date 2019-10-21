@@ -23,17 +23,17 @@
 (define (complex num) (eval (cadr(num))))
 
 ;compl - given complex number, returns the result of the complement operation
-(define (compl num) 
+(define (compl num)
     (list (real num)(- (complex num)))
 )
 
 ;abs - given complex number, returns the absolute value
-(define (abs num) 
+(define (abs num)
     (sqrt (+ (expt (real num) 2) (expt (complex num) 2)))
 )
 
 ;equal? - given complex num1, num2, returns #t/#f if they are equal
-(define (equal? num1 num2) 
+(define (equal? num1 num2)
     (and (= (real num1) (real num2)) (= (complex num1) (complex num2)))
 )
 
@@ -49,7 +49,7 @@
 
 ;prod - multiplies complex num1, num2
 (define (prod num1 num2)
-    (list 
+    (list
         (- (* (real num1) (real num2)) (* (complex num1) (complex num2)))
         (+ (* (real num1) (real num2)) (* (complex num1) (complex num2)))
     )
@@ -58,12 +58,12 @@
 ;quotient - divides complex num1/num2
 (define (quotient num1 num2)
     (list
-        (/ 
-            (+ (* (real num1) (real num2)) (* (complex num1) (complex num2))) 
+        (/
+            (+ (* (real num1) (real num2)) (* (complex num1) (complex num2)))
             (+ (expt (real num2) 2) (expt (complex num2) 2))
         )
-        (/ 
-            (- (* (real num2) (complex num1)) (* (real num1) (complex num2))) 
+        (/
+            (- (* (real num2) (complex num1)) (* (real num1) (complex num2)))
             (+ (expt (real num2) 2) (expt (complex num2) 2))
         )
     )
@@ -95,14 +95,14 @@
 ;root, left, right
 (define (preorder lst)(cond
     ((null? lst) lst)
-    (cons (car lst) (append (preorder (cadr lst)) (preorder (caddr lst))))  
+    (cons (car lst) (append (preorder (cadr lst)) (preorder (caddr lst))))
 ))
 
 ;inorder - accepts tree, returns list of values based on in-order traversal
 ;left, root, right
 (define (inorder lst)(cond
     ((null? lst) lst)
-    (append (inorder (cadr lst)) (cons (car lst) (inorder (caddr lst))))  
+    (append (inorder (cadr lst)) (cons (car lst) (inorder (caddr lst))))
 ))
 
 ;postorder - accepts tree, returns list of values based on post-order traversal
