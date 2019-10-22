@@ -108,17 +108,25 @@
 
 ;2) permutation detection
 
+;import assign4 remove
+;remove - takes list, atom, removes all top-level instances of atom from list
+(define (remove lst atom)(cond
+    ((null? lst) lst)
+    ((eqv? (car lst) atom) (remove (cdr lst) atom))
+    (else (cons (car lst) (remove (cdr lst) atom)))
+))
+
 ;permutation - take list1, list2, return #t/#f if lists are permutations
 (define (permutation list1 list2)(cond
     ((and (null? list1) (null? list2)) #t)
-    ((= (length list1) (length list2)) (permutation (remove* list1 (car list1)) (remove* list2 (car list1))))
+    ((= (length list1) (length list2)) (permutation (remove list1 (car list1)) (remove list2 (car list1))))
     (else #f)
 ))
 
-; '(test permutation)
-; (permuatation '(1 2 3 4 5) '(5 4 3 2 1))
-; (permuatation '(1 2 3 4 5 1) '(5 4 3 2 1 1))
-; (permuatation '(1 2 3 4 5 2) '(5 4 3 2 1 1))
+'(test permutation)
+(permutation '(1 2 3 4 5) '(5 4 3 2 1))
+(permutation '(1 2 3 4 5 1) '(5 4 3 2 1 1))
+(permutation '(1 2 3 4 5 2) '(5 4 3 2 1 1))
 
 ;3) binary tree operations
 
