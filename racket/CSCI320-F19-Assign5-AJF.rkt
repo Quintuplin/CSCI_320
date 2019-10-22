@@ -16,16 +16,33 @@
 ;racket documentation suggests inherent 'i' functionality
 ;https://docs.racket-lang.org/reference/generic-numbers.html
 
+;sqr
+(define (sqr x) (* x x))
+
+'(test sqr)
+(sqr 1)
+(sqr 2)
+(sqr 4)
+
 ;real - given complex number, returns the real portion
-(define (real num) (eval (car(num))))
+(define (real num) (eval (car num)))
+
+'(test real)
+(real '(2.5 3.7))
 
 ;complex - given complex number, returns the complex portion
-(define (complex num) (eval (cadr(num))))
+(define (complex num) (eval (cadr num)))
+
+'(test complex)
+(complex '(2.5 3.7))
 
 ;compl - given complex number, returns the result of the complement operation
 (define (compl num)
     (list (real num)(- (complex num)))
 )
+
+'(test compl)
+(compl '(2.5 3.7))
 
 ;abs - given complex number, returns the absolute value
 (define (abs num)
@@ -84,11 +101,11 @@
 ;root is an atom, leaves can be either atoms or subtrees
 ;tree? - accepts list as argument, returns #t, #f if valid binary tree
 (define (tree? lst)(cond
-    ((not (list? (lst))) #f)
+    ((not (list? lst)) #f)
     ((null? lst) #t)
     ((not (= (length lst) 3)) #f)
-    ((list? (car(lst))) #f)
-    (else (and (tree? (cadr(lst))) (tree? (caddr(lst)))))
+    ((list? (car lst)) #f)
+    (else (and (tree? (cadr lst)) (tree? (caddr lst))))
 ))
 
 ;preorder - accepts tree, returns list of values based on pre-order traversal
