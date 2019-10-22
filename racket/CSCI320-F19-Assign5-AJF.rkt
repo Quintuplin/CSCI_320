@@ -16,22 +16,14 @@
 ;racket documentation suggests inherent 'i' functionality
 ;https://docs.racket-lang.org/reference/generic-numbers.html
 
-;sqr
-(define (sqr x) (* x x))
-
-'(test sqr)
-(sqr 1)
-(sqr 2)
-(sqr 4)
-
 ;real - given complex number, returns the real portion
-(define (real num) (eval (car num)))
+(define (real num) (car num))
 
 '(test real)
 (real '(2.5 3.7))
 
 ;complex - given complex number, returns the complex portion
-(define (complex num) (eval (cadr num)))
+(define (complex num) (cadr num))
 
 '(test complex)
 (complex '(2.5 3.7))
@@ -49,20 +41,38 @@
     (sqrt (+ (expt (real num) 2) (expt (complex num) 2)))
 )
 
+'(test abs)
+(abs '(2.5 3.7))
+
 ;equal? - given complex num1, num2, returns #t/#f if they are equal
 (define (equal? num1 num2)
     (and (= (real num1) (real num2)) (= (complex num1) (complex num2)))
 )
+
+'(test equal?)
+(equal? '(2.5 3.7) '(2.5 3.7))
+(equal? '(2.5 3.7) '(2.5 3.8))
+(equal? '(2.4 3.7) '(2.5 3.7))
 
 ;plus - adds complex num1, num2
 (define (plus num1 num2)
     (list (+ (real num1) (real num2)) (+ (complex num1) (complex num2)))
 )
 
+'(test equal?)
+(equal? '(2.5 3.7) '(2.5 3.7))
+(equal? '(2.5 3.7) '(2.5 3.8))
+(equal? '(2.4 3.7) '(2.5 3.7))
+
 ;minus - subtracts complex num1, num2
 (define (minus num1 num2)
     (list (- (real num1) (real num2)) (- (complex num1) (complex num2)))
 )
+
+'(test minus)
+(minus '(2.5 3.7) '(2.5 3.7))
+(minus '(2.5 3.7) '(2.5 3.8))
+(minus '(2.4 3.7) '(2.5 3.7))
 
 ;prod - multiplies complex num1, num2
 (define (prod num1 num2)
@@ -71,6 +81,11 @@
         (+ (* (real num1) (real num2)) (* (complex num1) (complex num2)))
     )
 )
+
+'(test prod)
+(prod '(2.5 3.7) '(2.5 3.7))
+(prod '(2.5 3.7) '(2.5 3.8))
+(prod '(2.4 3.7) '(2.5 3.7))
 
 ;quotient - divides complex num1/num2
 (define (quotient num1 num2)
@@ -86,14 +101,24 @@
     )
 )
 
+'(test quotient)
+(quotient '(2.5 3.7) '(2.5 3.7))
+(quotient '(2.5 3.7) '(2.5 3.8))
+(quotient '(2.4 3.7) '(2.5 3.7))
+
 ;2) permutation detection
 
 ;permutation - take list1, list2, return #t/#f if lists are permutations
 (define (permutation list1 list2)(cond
     ((and (null? list1) (null? list2)) #t)
-    ((not (= (length list1) (length list2))) #f)
-    (else (permutation (remove* list1 (car list1)) (remove* list2 (car list1))))
+    ((= (length list1) (length list2)) (permutation (remove* list1 (car list1)) (remove* list2 (car list1))))
+    (else #f)
 ))
+
+; '(test permutation)
+; (permuatation '(1 2 3 4 5) '(5 4 3 2 1))
+; (permuatation '(1 2 3 4 5 1) '(5 4 3 2 1 1))
+; (permuatation '(1 2 3 4 5 2) '(5 4 3 2 1 1))
 
 ;3) binary tree operations
 
@@ -103,9 +128,9 @@
 (define (tree? lst)(cond
     ((not (list? lst)) #f)
     ((null? lst) #t)
-    ((not (= (length lst) 3)) #f)
     ((list? (car lst)) #f)
-    (else (and (tree? (cadr lst)) (tree? (caddr lst))))
+    ((=(length lst) 3) (and (tree? (cadr lst)) (tree? (caddr lst))))
+    (else #f)
 ))
 
 ;preorder - accepts tree, returns list of values based on pre-order traversal
