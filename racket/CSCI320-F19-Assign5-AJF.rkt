@@ -165,9 +165,9 @@
 (define (inorder lst)(cond
     ((null? lst) lst)
     ((list? lst) (append
-        (preorder (cadr lst))
-        (preorder (car lst))
-        (preorder (caddr lst))
+        (inorder (cadr lst))
+        (inorder (car lst))
+        (inorder (caddr lst))
     ))
     (else (list lst))
 ))
@@ -180,9 +180,9 @@
 (define (postorder lst)(cond
     ((null? lst) lst)
     ((list? lst) (append
-        (preorder (cadr lst))
-        (preorder (caddr lst))
-        (preorder (car lst))
+        (postorder (cadr lst))
+        (postorder (caddr lst))
+        (postorder (car lst))
     ))
     (else (list lst))
 ))
