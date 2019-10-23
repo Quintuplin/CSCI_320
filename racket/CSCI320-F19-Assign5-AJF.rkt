@@ -149,7 +149,12 @@
 ;root, left, right
 (define (preorder lst)(cond
     ((null? lst) lst)
-    (cons (car lst) (append (preorder (cadr lst)) (preorder (caddr lst))))
+    ((list? lst) (append
+        (preorder (car lst))
+        (preorder (cadr lst))
+        (preorder (caddr lst))
+    ))
+    (else (list lst))
 ))
 
 '(test preorder)
@@ -159,7 +164,12 @@
 ;left, root, right
 (define (inorder lst)(cond
     ((null? lst) lst)
-    (append (inorder (cadr lst)) (cons (car lst) (inorder (caddr lst))))
+    ((list? lst) (append
+        (preorder (cadr lst))
+        (preorder (car lst))
+        (preorder (caddr lst))
+    ))
+    (else (list lst))
 ))
 
 '(test inorder)
@@ -169,7 +179,12 @@
 ;left, right, root
 (define (postorder lst)(cond
     ((null? lst) lst)
-    (append (postorder (cadr lst)) (postorder (caddr lst)) (list (car lst)))
+    ((list? lst) (append
+        (preorder (cadr lst))
+        (preorder (caddr lst))
+        (preorder (car lst))
+    ))
+    (else (list lst))
 ))
 
 '(test postorder)
