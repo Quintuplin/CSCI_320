@@ -141,12 +141,19 @@
     (else #f)
 ))
 
+'(test tree?)
+(tree? '(a (b () (c () ())) (d () (e (f () ()) ()))))
+(tree? '(a (b () (c () ())) (d () (e (f ( ()) ())))))
+
 ;preorder - accepts tree, returns list of values based on pre-order traversal
 ;root, left, right
 (define (preorder lst)(cond
     ((null? lst) lst)
     (cons (car lst) (append (preorder (cadr lst)) (preorder (caddr lst))))
 ))
+
+'(test preorder)
+(preorder '(a (b () (c () ())) (d () (e (f () ()) ()))))
 
 ;inorder - accepts tree, returns list of values based on in-order traversal
 ;left, root, right
@@ -155,9 +162,15 @@
     (append (inorder (cadr lst)) (cons (car lst) (inorder (caddr lst))))
 ))
 
+'(test inorder)
+(inorder '(a (b () (c () ())) (d () (e (f () ()) ()))))
+
 ;postorder - accepts tree, returns list of values based on post-order traversal
 ;left, right, root
 (define (postorder lst)(cond
     ((null? lst) lst)
     (append (postorder (cadr lst)) (postorder (caddr lst)) (list (car lst)))
 ))
+
+'(test postorder)
+(postorder '(a (b () (c () ())) (d () (e (f () ()) ()))))
