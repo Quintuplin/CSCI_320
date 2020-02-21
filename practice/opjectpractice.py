@@ -18,6 +18,9 @@ class Parrot():
 # blu = Parrot('Blue', 10)
 # woo = Parrot('Woo', 15)
 
+# print(blu.species)
+# print(blu.__class__.species)
+
 # print("Blu is a {}".format(blu.__class__.species))
 # print("Woo is also a {}".format(woo.__class__.species))
 
@@ -83,8 +86,9 @@ class Parrot(Bird): #auto uses defailt Bird init
         print("can't swim")
 
 class Penguin:
+    __supersecrit='can'
     def __secrit(self): #private functions
-        print("secritly can")
+        print("secritly", self.__supersecrit)
 
     def fly(self):
         print("can't fly")
