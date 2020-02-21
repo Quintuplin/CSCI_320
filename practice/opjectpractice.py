@@ -280,64 +280,65 @@ class Point:
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
-p1 = Point(2,3)
-p3 = Point(2,3)
-p2 = Point(-1,2)
+# p1 = Point(2,3)
+# p3 = Point(2,3)
+# p2 = Point(-1,2)
 
-# this works "pythonically" due to using the __str__ property
-print(p1)
-print(str(p1))
-print(format(p1))
+# # this works "pythonically" due to using the __str__ property
+# print(p1)
+# print(str(p1))
+# print(format(p1))
 
-# uses __str__ and __add__
-print('add')
-print(p1+p2)
+# # uses __str__ and __add__
+# print('add')
+# print(p1+p2)
 
-# uses __str__ and __lt__
-print('less than')
-print(Point(1,1) < Point(-2,-3))
-print(p1 < p2)
-print(p2 < p1)
+# # uses __str__ and __lt__
+# print('less than')
+# print(Point(1,1) < Point(-2,-3))
+# print(p1 < p2)
+# print(p2 < p1)
 
-# somehow also works for 'free'
-print('greater than')
-print (p1 > p2)
-print (p2 > p1)
+# # somehow also works for 'free'
+# print('greater than')
+# print (p1 > p2)
+# print (p2 > p1)
 
-# uses __str__ and __eq__
-print('equal to')
-print(p1 == p2)
-print(p1 == p3)
+# # uses __str__ and __eq__
+# print('equal to')
+# print(p1 == p2)
+# print(p1 == p3)
 
-# note: p1 == p1 will always return true regardless
+# # note: p1 == p1 will always return true regardless
 
-# does not work, despite lt and eq: need to explicitly write le
-try:
-    print('less= than')
-    print (p1 <= p2)
-    print (p2 <= p1)
-except Exception as e:
-    print(e)
+# # does not work, despite lt and eq: need to explicitly write le
+# try:
+#     print('less= than')
+#     print (p1 <= p2)
+#     print (p2 <= p1)
+# except Exception as e:
+#     print(e)
 
 class pointle(Point):
     def __le__(self, other):
         return self.__lt__(other) or self.__eq__(other)
 
-p1 = pointle(2,3)
-p3 = pointle(2,3)
-p2 = pointle(-1,2)
-print('pointle less= than')
-print (p1 <= p2)
-print (p2 <= p1)
-print (p3 <= p1)
+# p1 = pointle(2,3)
+# p3 = pointle(2,3)
+# p2 = pointle(-1,2)
+# print('pointle less= than')
+# print (p1 <= p2)
+# print (p2 <= p1)
+# print (p3 <= p1)
 
-# somehow also works for 'free'
-print('pointle greater= than')
-print (p1 >= p2)
-print (p2 >= p1)
-print (p3 >= p1)
+# # somehow also works for 'free'
+# print('pointle greater= than')
+# print (p1 >= p2)
+# print (p2 >= p1)
+# print (p3 >= p1)
 
-# # Operator Overloading Special Functions in Python
+
+# # Note: Operator Overloading Special Functions in Python
 # Operator	Expression	Internally
 # Addition	p1 + p2	p1.__add__(p2)
 # Subtraction	p1 - p2	p1.__sub__(p2)
