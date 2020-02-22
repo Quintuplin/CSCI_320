@@ -33,3 +33,30 @@ microservices -
     disadvantages:
         - if a microservice goes down, the entire application loses that functionality
         - microservices must be standalone, and thus might replicate work done elsewhere as part of doing their own jobs
+
+non-relational data -
+    ways to store data that is not sql
+        examples
+            file systems
+                frequently filled with JSON files
+
+            database-like
+                similar to sql, but accepting objects or files or sub-tables
+
+            simple key-value softwares
+                memory-style databases for expanded quick-access values
+
+            graph-style
+                data with relationship-based linking (similar to linked lists)
+
+            object data stores
+                store with artificial paths and blob content
+                works similarly to a filesystem but database-styled
+
+    most of these variations are implemented in a sql-like manner, and are simply more specialized variations therein
+
+load balancing
+    when a computer cluster exists to do work as assigned, then a parent node will assign jobs in such a way to maximize output efficiency by using all resources equally (maximally)
+
+    load balancing is that process
+
