@@ -1,0 +1,35 @@
+sharding -
+    similar to horizontal partitioning, which is making multiple sharded tables or databases, but staying on a single server
+
+    contrast against vertical partitioning, which is splitting data columnwise into multiple tables, either logically or for improved efficiency or security
+
+    splitting one server/database into multiple servers with identical
+    tables, but different contents
+
+    utility - efficiency for VERY BIG DATA
+
+    purpose - limit row count to improve query speed
+    application
+
+    example:
+        - North America shard contains only rows pertaining to NA
+        - Europe shard contains only rows pertaining to Europe
+        - both shards contain identical tables & attributes; but different contents
+
+        - shards should be logically split, so that it is easy to determine which shard should be queried in any particular scenario
+
+microservices -
+    application design architecture
+
+    involves splitting 'one large software' into a connected network of tiny softwares
+
+    contrast against monolithic architecture, where the software is a single giant
+
+    advantages:
+        - microservices can be replaced
+        - microservices can be tested individually
+        - microservices can be rolled out individually
+
+    disadvantages:
+        - if a microservice goes down, the entire application loses that functionality
+        - microservices must be standalone, and thus might replicate work done elsewhere as part of doing their own jobs
