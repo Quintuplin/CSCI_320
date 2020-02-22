@@ -87,7 +87,7 @@ class Parrot(Bird): #auto uses defailt Bird init
 
 class Penguin:
     __supersecrit='can'
-    def __secrit(self): #private functions
+    def __secrit(self): #private(ish) functions
         print("secritly", self.__supersecrit)
 
     def fly(self):
