@@ -1,0 +1,99 @@
+sharding -
+    similar to horizontal partitioning, which is making multiple sharded tables or databases, but staying on a single server
+
+    contrast against vertical partitioning, which is splitting data columnwise into multiple tables, either logically or for improved efficiency or security
+
+    splitting one server/database into multiple servers with identical
+    tables, but different contents
+
+    utility - efficiency for VERY BIG DATA
+
+    purpose - limit row count to improve query speed
+    application
+
+    example:
+        - North America shard contains only rows pertaining to NA
+        - Europe shard contains only rows pertaining to Europe
+        - both shards contain identical tables & attributes; but different contents
+
+        - shards should be logically split, so that it is easy to determine which shard should be queried in any particular scenario
+
+microservices -
+    application design architecture
+
+    involves splitting 'one large software' into a connected network of tiny softwares
+
+    contrast against monolithic architecture, where the software is a single giant
+
+    advantages:
+        - microservices can be replaced
+        - microservices can be tested individually
+        - microservices can be rolled out individually
+
+    disadvantages:
+        - if a microservice goes down, the entire application loses that functionality
+        - microservices must be standalone, and thus might replicate work done elsewhere as part of doing their own jobs
+
+non-relational data -
+    ways to store data that is not sql
+        examples
+            file systems
+                frequently filled with JSON files
+
+            database-like
+                similar to sql, but accepting objects or files or sub-tables
+
+            simple key-value softwares
+                memory-style databases for expanded quick-access values
+
+            graph-style
+                data with relationship-based linking (similar to linked lists)
+
+            object data stores
+                store with artificial paths and blob content
+                works similarly to a filesystem but database-styled
+
+    most of these variations are implemented in a sql-like manner, and are simply more specialized variations therein
+
+load balancing
+    when a computer cluster exists to do work as assigned, then a parent node will assign jobs in such a way to maximize output efficiency by using all resources equally (maximally)
+
+    load balancing is that process
+
+cache
+    a small, bonus data store designed to keep farther away resources closer - and therefore make them accessible faster
+
+    can be applied to hardware as well as software
+
+    cpu has a cache to store tiny memory items that have been accessed recently
+    however, operating systems, web browsers, and servers have similar (but much larger) caches to store data that they would otherwise have to perform expensive operations to reacquire.
+
+    caches tend to use te principle of locality, but different types of caches have different elements that they focus on
+
+    hardware -
+        cpu and gpu caches tend to have a few cascading tiers of caches, so that items pushed out of one tier get placed in the next one. this is due to the exponentially better speed of access between the cache tiers, and an even higher difference between cache and memory - with memory to disk being the greatest difference by far
+
+    network -
+        caches can store entire server states in intermediate locations, allowing a website to be 'accessed' by loading a cached version rather than live. these frequently have caching policies attached to them so that the caches can be renewed on scheduled or regular intervals.
+
+        TLRU 'time aware least recently used' network caching utilizes a TTU 'time to use' value; the cache expires when it runs out of time, allowing developers to specify how frequently a specific network cache must be renewed
+
+        LFRU 'least frequent recently used' is more specialized; if creates a special partition to the most frequently used elements to permanently keep their caches stored. it is split into the frequent table, where fequently used resources are stored; when a change occurs, order is thus
+            - lowest value 'unprivileged' item is dropped
+            - lowest value 'privileged' item is downgraded (if new item qualifies to replace it)
+            - new item is placed in 'privileged' (if it qualifies)
+            - otherwise, new item is placed in 'unprivileged' (if it is not sufficiently frequent for privileged access)
+
+        thse are confusing
+
+    software
+        os or web browsers tend to store copies of results of expensive functions or page loads, so that it can reuse those rather than rerunning the functions
+
+    buffer vs cache
+        caching is for when something is reused
+            used to temporarily hold data in case it needs to be used again, saving it from needing to be queried the long way
+
+        buffer is for when something is about to be used
+            used to temporarily hold data to batch write rather than write every item individually, for example
+
+        both increase speed, but for different reasons and in dfferent ways
