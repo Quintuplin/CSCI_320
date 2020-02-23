@@ -60,3 +60,40 @@ load balancing
 
     load balancing is that process
 
+cache
+    a small, bonus data store designed to keep farther away resources closer - and therefore make them accessible faster
+
+    can be applied to hardware as well as software
+
+    cpu has a cache to store tiny memory items that have been accessed recently
+    however, operating systems, web browsers, and servers have similar (but much larger) caches to store data that they would otherwise have to perform expensive operations to reacquire.
+
+    caches tend to use te principle of locality, but different types of caches have different elements that they focus on
+
+    hardware -
+        cpu and gpu caches tend to have a few cascading tiers of caches, so that items pushed out of one tier get placed in the next one. this is due to the exponentially better speed of access between the cache tiers, and an even higher difference between cache and memory - with memory to disk being the greatest difference by far
+
+    network -
+        caches can store entire server states in intermediate locations, allowing a website to be 'accessed' by loading a cached version rather than live. these frequently have caching policies attached to them so that the caches can be renewed on scheduled or regular intervals.
+
+        TLRU 'time aware least recently used' network caching utilizes a TTU 'time to use' value; the cache expires when it runs out of time, allowing developers to specify how frequently a specific network cache must be renewed
+
+        LFRU 'least frequent recently used' is more specialized; if creates a special partition to the most frequently used elements to permanently keep their caches stored. it is split into the frequent table, where fequently used resources are stored; when a change occurs, order is thus
+            - lowest value 'unprivileged' item is dropped
+            - lowest value 'privileged' item is downgraded (if new item qualifies to replace it)
+            - new item is placed in 'privileged' (if it qualifies)
+            - otherwise, new item is placed in 'unprivileged' (if it is not sufficiently frequent for privileged access)
+
+        thse are confusing
+
+    software
+        os or web browsers tend to store copies of results of expensive functions or page loads, so that it can reuse those rather than rerunning the functions
+
+    buffer vs cache
+        caching is for when something is reused
+            used to temporarily hold data in case it needs to be used again, saving it from needing to be queried the long way
+
+        buffer is for when something is about to be used
+            used to temporarily hold data to batch write rather than write every item individually, for example
+
+        both increase speed, but for different reasons and in dfferent ways
