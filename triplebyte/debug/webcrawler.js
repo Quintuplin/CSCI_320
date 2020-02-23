@@ -84,9 +84,13 @@ WebCrawler.prototype._spawn_crawling_task = function(url) {
     this.currently_being_explored.add(url);
 
     if (this.url_should_be_crawled_as_node(url)) {
+        // console.log('pre', this)
         this._crawl_with_get_request(url);
+        // console.log('post', this)
     } else {
+        // console.log('pre', this)
         this._crawl_with_head_request(url);
+        // console.log('post', this)
     }
 };
 
@@ -106,24 +110,28 @@ WebCrawler.prototype.url_should_be_crawled_as_node = function(url) {
     const parsed_url = url_lib.parse(url);
     const parsed_domain = url_lib.parse(this.domain);
 
-    // TODO: restore this line to default after fixing logic
-    return false
-
     // FIXME: bug here (should be returning false for failing test 1)
+    // ISSUE is host comparison
+
+    console.log('host1', parsed_domain.host, 'host2', parsed_domain.host)
 
     if (parsed_url.host !== parsed_domain.host) {
         return false;
     }
 
+    console.log('host1', parsed_domain.protocol, 'host2', parsed_domain.protocol)
     // prevent you from starting to crawl FTP if you're looking at HTTP
     if (parsed_url.protocol !== parsed_domain.protocol) {
         return false;
     }
 
     const filetype_list = ['pdf', 'jpg', 'gif', 'js', 'css', 'png'];
-
+    // IF URL POINTS TO FILE, RETURN FALSE
     const split_url = url.split('.');
-    if (filetype_list.indexOf(split_url[split_url.length - 1]) !== -1) {
+
+
+    console.log('should be true', Boolean(filetype_list.includes(split_url[split_url.length - 1])))
+    if (filetype_list.includes(split_url[split_url.length - 1])) {
         return false;
     }
 
@@ -198,11 +206,10 @@ WebCrawler.prototype._crawl_with_get_request = function(url) {
 };
 
 WebCrawler.prototype._crawl_with_head_request = function(url) {
-    // FIXME: returning request_type undefined
-    this.logger.crawl_with_head_request(url);
+    // FIXME: returning request_type undefined    this.logger.crawl_with_get_request(url);
 
     let node = this.graph.nodes[url];
-    node.request_type = 'head';
+    node.request_type = 'get';
 
     const parsed_url = url_lib.parse(url);
     let response_data = '';
@@ -217,8 +224,28 @@ WebCrawler.prototype._crawl_with_head_request = function(url) {
         });
 
         response.on('end', () => {
+            if (response_data && response.headers['content-type'].split('/')[0] === 'text') {
+                let res_url = url;
+                let split_url = url.split('/');
+                if (split_url[split_url.length - 1].indexOf('.') === -1) {
+                    res_url += '/';
+                }
+
+
+                this.errors = this.errors.concat(errors);
+            }
+
+            let data = { 'request_type' : 'get',
+                         'status' : response.statusCode };
+
+            if (response.statusCode === 301) {
+                data.headers = response.headers;
+            }
+
             node.status = 'success';
             node.status_code = response.statusCode;
+            node.contents = response_data;
+
             this._finalize_crawl(url);
         });
     });
@@ -226,8 +253,9 @@ WebCrawler.prototype._crawl_with_head_request = function(url) {
     request.on('error', e => {
         node.status = 'failure';
         node.error = e;
-
         this.note_error(`When crawling ${url}, got a ${e}`);
+        // FIXME: this may be a bug, unsure, not part of failing test 1
+        // this._finalize_crawl(url);
     });
 
     request.on('socket', socket => {
