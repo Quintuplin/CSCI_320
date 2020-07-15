@@ -1,0 +1,281 @@
+What are some reasons you may use a link list over an array list and vice versa?
+
+What is a class?
+    a basic building block of an object:
+        an object is an instantiation of a class = a class is a blueprint of an object
+
+What is an object?
+ a software abstraction containing fields (states) and methods (functionalities)
+    fields store data inside the object, but do not generally make that data visible
+        e.g. name, age, size, ID, x, y (variables)
+    methods are callable, and provide functionality, generally utilizing the stored values in the process
+        e.g. setter, getter, getstring (IO functions)
+        e.g. calculateArea (utility functions)
+        e.g. generatePDF (bit of both)
+
+Advantages of OOP
+    modularity
+    information hiding
+    plug-and-play objects can be replaced/altered/fixed internally while retaining the same interface
+
+What is an interface?
+    a reference type similar to a class;
+        a class implements an interface, this can either be stored within the class or inherited with the 'implements' keyword
+
+    an interface defines the methods (abstract) which the class MUST contain, as well as any FINAL STATIC fields
+
+    an interface can be extended by another interface with the 'extends' keyword
+
+What’s a functional interface? (More of a java specific question)
+    @functionalInterface keyword good for debugging
+
+    a functional interface contains exactly one abstract/unimplemented method (but any number of implemented methods?)
+
+    SAM = single abstract method
+
+    a functional interfeace is generally exemplified by lambda expressions
+
+    in other words, a single function (no value) object
+
+    this appears to be the closest thing to functional programming possible in hard-OOP Java
+
+    e.g.
+        @FunctionalInterface
+        interface MyFunctionalInterface {
+
+            public int addMethod(int a, int b);
+        }
+        public class BeginnersBookClass {
+
+        public static void main(String args[]) {
+                // lambda expression
+                MyFunctionalInterface sum = (a, b) -> a + b;
+                System.out.println("Result: "+sum.addMethod(12, 100));
+            }
+        }
+
+What does it mean to override a method?
+    when a child class implements a method that supercedes (replaces) that of the parent's
+    e.g. if you want a specialized print() statement for the child class but already wrote one for the parent
+
+If you wanted to call the parent method how would you do that instead of the child method?
+    use the 'parent' keyword
+
+    parent.print() in this example
+
+The DRY principle, 'don’t repeat yourself', what does that mean in terms of coding? Why is it important to not repeat yourself?
+    the purpose is twofold; to prevent wasted duplication of effort, and to prevent code redundancy. If you already have a perfectly functional cube object, don't write a new one.
+
+    upsides:
+        - fixing a single bug should fix all instances of it;
+        - improving code in a single object should improve all instances where that type of calculation is executed
+        - reduces bloat/waste
+        - keeps larger projects better organized and more 'sleek'
+
+    downsides:
+        - spend time looking for an existing object before writing a new one; becomes untenable in excessively large projects
+        - may lead to feature bloat within objects as they are written to provide functionality for all possible use cases
+
+    contrast against WET 'write every time'
+
+    works well with SRP 'single responsibility principle'
+        - smaller, single-use objects are easier to mix and match
+        - works well with DRY
+        - tends towards functional interfaces?
+
+What is a unit test and why are they used?
+    - it's the simplest test type: you set up a simple input-> expected output testing scenario, and find out if the code did what it was supposed to in that specific situation
+
+    upsides: detects many issues in code standalone, which catches the biggest/simplest/dumbest mistakes
+
+    downsides: not holistic enough to be the only test type
+
+    goes well with regression testing: the process of testing all code, automatically, before publishing any changes
+
+Threading: what is a race condition?
+    - two threads modify the same resource
+    - depending on which one gets there first, the result changes
+    - threads must be scheduled somehow to prevent this
+
+What is immutability? How would you make a class immutable in java?
+    keyword final
+        makes variable name reserved and value locked -> "immutable"
+
+        however, an object NAME is reserved, but the functions can be called within it, which may mutate the internal values
+
+        to make an object truly immutable, it must have read-only methods
+            only setter in the constructor
+
+        benefits = thread-safe
+
+    keyword static
+        class has members; attribute or method
+            each is instanced UNLESS static
+
+            static means SHARED
+
+            e.g. Object object, Instance of Object instance
+                object has static variables, instanced variables (and functions)
+                - static method must be called object.method()
+                - instanced method must be called instance.method()
+                - static variable can be modified by object.method() OR instance.method()
+                - instanced variable can only by modified by instance.method()
+
+            STATIC is good for handling thread scheduling/locking if done right, or the easist way to screw up threading for the same reasons.
+
+            in other words, STATIC is globally shared but still SCOPED
+
+            public static is true global (but still must be called with object.name)
+
+What is a singleton and how would you create one in java?/ why might you want to have a singleton?
+    a singleton is a class which is only allowed one instance, only instantiated once, and is reliably 'always ready'
+
+    singletons are good for when you want the advantages of an object design, but otherwise want a global access point. Good for drivers, config settings, thread pools, caches, and logging.
+
+How would you implement a singleton class in java and what would you see in it?
+    public final on singleton class
+    private static final INSTANCE to autoconstruct on call
+    private on its constructor
+    static on its getInstance
+    public on any submethods
+
+    e.g.:
+
+    public final class Singleton {
+        private static final Singleton INSTANCE = new Singleton();
+
+        private Singleton() {}
+
+        public void functionname()
+
+        public static Singleton getInstance() {
+            return INSTANCE;
+        }
+
+    }
+
+    if you try to make a new instance of the singleton, it will fail because the contructor is private
+
+    TO USE, usable = Singleton.getInstance()
+    then usable.functionname()
+
+What does synchronize do in java?
+    preventing race conditions in threading by blocking the resource (first come first served)
+    necessary if threading with shared resources
+
+    'synchonized' keyword
+        on an instanced method: ensures that each instance of the method call is given to one thread only
+
+        on a static method: ensures that there can only be one thread executing only one instance of this method in this class
+
+        within methods:
+            synchonized blocks:
+                the code executes independently until the synchronized block
+                then, whichever thread gets there first gets the block, with remaining threads waiting
+
+                pass 'this' to the monitor to ensure the rule is enforced for the speicific instance of the object
+
+                one thread PER MONITOR is allowed within the block at a time (threat of zombie state?)
+
+            synchonized blocks in static method:
+                same but pass class name instead of object name to the monitor
+
+        a thread within one synchonized block can continue to enter contained synchronized sub-blocks (sub blocks are redundant to re synchronize)
+
+Saw on your resume you’re doing agile, what is agile to you? What’s the other method (waterfall)?
+    agile to me could be defined as an approach that sets large goals, but reassesses constantly. each day, an agile approach reviews what's working and what isn't, seeks feedback on decisions made or changes to the outside conditions, and is willing to change direction or focus as needed. designs are dynamic, as are project requirements, as ultimately the stakeholder's understanding of the project, it's requirements, capabilities, and limitations, will evolve as the project progresses
+
+        advantages:
+            able to pivot to evolving requirements
+            communication and dynamic approach allows for stakeholder to see outcomes of decisions quickly and recieve more customised products
+            prototype evolution, an extreme of agile, can allow good ideas to be tested, and bad ideas to be discarded, with minimal lost time
+
+        disadvantages:
+            less planning and potential for early plans to be invalidated by later decisions can make project messy
+            less structure can lead to false starts or allow for mismanagement
+            can be caught in a cycle of endless redesign and false starts due to it being too easy to change direction
+            progress in one direction might undo progress in another due to lack of foreplanning
+
+contrast to waterfall
+    waterfall is a strictly heirarchical design process. it is good for organizing large, complex projects, due to an adherence to a clear order of operations and a formal ladder of defining, organizing, preparing, and executing a plan. Waterfall excels where the project is clear and unlikely to change; it allows for better plans, clearer requirements, processes, and timelines; and ensures proper time will be remaining for testing and quality assurance. However, this inflexibility can be a double edged sword
+
+        advantages:
+            formally organized and structured; no uncertainty, no false starts, clear schedules
+            able to distribute tasks and schedules across large teams even with complex interlocking processes
+            faster AND better outcomes under ideal circumstances
+
+        disadvantages:
+            inflexibility means that if changes must be made, everything grinds to a halt
+            lack of accounting for changes can be small scale, leading to less satisfied stakeholder
+            lack of accounting for changes can be large scale, requiring a project be scrapped and restarted
+            startup time is high, which can lead to impatience
+            startup time is high, which means that prototypes are harder to see in practice until later in development, where necessary changes might be overly costly to account for
+
+Are you familiar with writing SQL queries?
+    very
+
+Let’s assume we have an employee table, employee table has 4 columns: ID, name, salary, managers ID (reference to the same table), write a query: I want to see each employee and their managers name **More than coding, need good developers, work ethic, deadline driven**
+
+    auto join query:
+        SELECT tablea.name, tableb.name
+        FROM table AS tablea
+        JOIN table AS tableb
+        ON tableb.id = tablea.managerid
+
+    explicit join query:
+        SELECT tablea.name, tableb.name
+        FROM table AS tablea, table AS tableb
+        WHERE tableb.id = tablea.managerid
+
+    subwuery:
+        SELECT tablea.name, (
+            SELECT name
+            FROM table AS tableb
+            WHERE tableb.id = tablea.managerid
+        )
+        FROM table AS tablea
+
+Heavy on Java 8, trying to go to Java 11?
+    sounds good
+
+Familiar with Java OOP?
+    barely; I'm most familiar with Python followed by Javascript, then C, and finally Java. However, I fundamentally believe that any language can be mastered; they're all quite similar, and I learn best by doing. I have utilized both Java, OOP, and Java OOP in school and afterwards in practice; just haven't worked professionally with it (yet).
+
+Experience with data structures and algorithms?
+    Yes; In my experience with the Stormwater Billing software, I have utilized both; (as well as having taken classes in the concepts). Given a list of a few hundred thousand properties, I had to determine how to algorithmically guess if they shared an owner based on name similarities, cross-reference whether those properties are adjacent to another, dynamically group them based on manual review of some of the fuzzy-uncertain name-pair matches; and finally calculate billing based on their property classifications, jurisdictions, and previous-year billing. Throughout this process I was given excel sheets with the data, limiting the data-structure side of it (in the end, I loaded it into Pandas DataFrames); but my algorithms changed dramatically as I designed different approaches to solving the problem; then optimizing and redesigning the best approach to reduce its calculation time from days to hours; then minutes. An inefficient algorithm does not exist in a vacuum; what I learned most was that an incorrect approach is frequently the most significant issue when dealing with an excessively slow calculation.
+
+    In both data structures and algorithms, I enjoy solving a problem. Finding the optimal method for storing data, as with optimizing an algorithm, can be extremely satisfying. As such, my approach has been to analyze the data and problem; then come up with a creative, effective solution in terms of both data and algorithm. Then, once the issue has been deemed solvable, more efficient approaches and solutions are researched, interchanged, and upgraded.
+
+Write a class that has a method called find docs
+
+    class ThisClass(){
+        void findDocs(){
+            System.out.println("does something");
+        }
+    }
+
+Difference between a linked list vs array list
+    a linked list is a loosely connected list: each element contains a reference to the next and previous entry, but there is no master list or way to jump around
+        advantages:
+            able to add elements to the front, middle, or end easily by modifying the neighbor's references
+            able to be stored in arbitrary free space within memory
+            items can be of arbitrary types and arbitrary sizes
+        disadvantages:
+            incredibly inefficient to try to sort, search, count the length, or jump to a specific index
+            references can be messed up, leading to invalid links and causing loops/glitches
+
+    array list: a block of memory with contiguous spaces for each contained element
+        advantages:
+            able to search, index, sort, ethic
+            uniform data type / size can be a good thing for stability and readability
+        disadvantages:
+
+
+What is method overloading?
+    overloading is when you make a single method function differently based on the inputs provided. as a simplest example, print() vs print("x") vs print("x", "y")
+
+    print() might print "print"
+    print("x"), however, is a different function with a single String input, and might print the string
+    print("x", "y"), similarly, is a third function, same name but two String inputs, and would likely print either each string on subsequent lines, or print them on a single line, comma-separated
+
+    each function uses the same function name, but different types, order, or number of parameters; the general purpose is to make what appears to be a 'single' function, that is capable of handling a wider range of cases while still providing the expected functionality.
