@@ -1,5 +1,5 @@
 import java.util.*;
-public class Main{
+public class java_iterator{
 
    static Iterator func(ArrayList mylist){
       Iterator it=mylist.iterator();

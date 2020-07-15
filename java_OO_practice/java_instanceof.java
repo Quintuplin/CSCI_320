@@ -6,7 +6,7 @@ class Rockstar{   }
 class Hacker{}
 
 
-public class InstanceOFTutorial{
+public class java_instanceof{
 
    static String count(ArrayList mylist){
       int a = 0,b = 0,c = 0;
@@ -34,5 +34,6 @@ public class InstanceOFTutorial{
          if(s.equals("Hacker"))mylist.add(new Hacker());
       }
       System.out.println(count(mylist));
+    //   sc.close();
    }
 }
