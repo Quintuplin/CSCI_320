@@ -1,19 +1,16 @@
 numlines = input()
 
-lines = []
+valsdict = {}
+
 for i in range(int(numlines)):
     line = input()
-    lines.append(str(line))
-
-setlines = set(lines)
-print(len(setlines))
+    if (line in valsdict):
+        valsdict[line]+=1
+    else:
+        valsdict[line]=1
+print(len(valsdict))
 
 summary = ''
-for line in lines:
-    if line in setlines:
-        countword = lines.count(line)
-        summary += str(countword) + ' '
-        setlines.remove(line)
+for count in valsdict.values():
+    summary += str(count) + ' '
 print(summary[:-1])
-
-# TODO: too slow on very large inputs, correct otherwise
