@@ -13,15 +13,13 @@ def countingValleys(n, s):
     for letter in s:
         prevelev = elev
 
-        if(s=='U'):
-            elev+=1
-        elif(s=='D'):
-            elev-=1
+        if(letter=='U'):
+            elev=elev+1
+        elif(letter=='D'):
+            elev=elev-1
 
         if(prevelev == 0 and elev == -1):
-            print("valley")
-            valleys +=1
-
+            valleys=valleys+1
     return valleys
 
 if __name__ == '__main__':
